@@ -4,10 +4,19 @@ import io  # For working with image data in memory
 from camerasqlite import camerasqlite
 
 app = FastAPI(
-    title="My Image Serving API",
+    title="kenik ipcamera from-db-images api",
     description="This API serves images from an SQLite Database",
     version="1.0.0",
 )
+
+@app.get("/max_entries", response_model=int)
+async def get_maximum_entries():
+    db = camerasqlite()
+    max_id = db.getmax()
+    if max_id:
+        return max_id
+    else:
+        return 0  # If the database is empty
 
 @app.get("/images/{image_id}")
 async def get_image(image_id: int):
