@@ -1,0 +1,7 @@
+CREATE TABLE images2 (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    image_data BLOB
+);
+
+.schema images2
