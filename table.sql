@@ -4,4 +4,13 @@ CREATE TABLE images2 (
     image_data BLOB
 );
 
-.schema images2
+.schema images
+
+drop table images;
+
+ CREATE TABLE IF NOT EXISTS images (
+            id INTEGER PRIMARY KEY,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            address TEXT,
+            image BLOB
+        )

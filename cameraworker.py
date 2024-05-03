@@ -23,4 +23,4 @@ class CameraWorker():
         """
         for cameraw in cameraworkerlist:
             cameraw.capture()
-            database.store(cameraw.get_jpg())
+            database.store(cameraw.get_jpg(),cameraw.host)
