@@ -38,13 +38,13 @@ class Camera():
     def save_to_file(self,filename):
         cv2.imwrite(filename, self.frame)
 
-    def get_jpg(self):
+    def get_jpg(self,quality=98):
         frame_rgb = cv2.cvtColor(self.frame, cv2.COLOR_BGR2RGB)
         pil_image = Image.fromarray(frame_rgb)
 
         #  Encode as JPEG into a buffer
         image_buffer = io.BytesIO()
-        pil_image.save(image_buffer, format="JPEG", quality=90)
+        pil_image.save(image_buffer, format="JPEG", quality=quality)
         encoded_image = image_buffer.getvalue()
         return encoded_image
 
