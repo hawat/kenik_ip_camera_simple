@@ -16,6 +16,15 @@
    ```bash
    git clone [https://github.com/hawat/kenik_ip_camera_simple.git]
 
+2. Edit config.ini to fit your neads.
+3. Run main.py script to get data from all you kenik ip cameras
+   ```bash
+   python main.py 
+   ````
+4. Run api.py to get image data by easy http api calls 
+   ```bash
+   ./runapi.sh
+   ```
 **Background:**
 
 Kenik ip cameras expoze an rstp endpoint that can be accessed to get still images 
