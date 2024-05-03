@@ -14,4 +14,4 @@
 
 1. Clone the repository:
    ```bash
-   git clone [invalid URL removed]
+   git clone [https://github.com/hawat/kenik_ip_camera_simple.git]
