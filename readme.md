@@ -1,7 +1,8 @@
-# Kenik ip camera simple
+# Kenik ip camera simple 
 
-**Brief Description:** collection of python tools to get images from kenik ip cameras
+**Brief Description:** collection of python tools to get images from kenik ip cameras, 
 ## Installation
+Keep in mind that this software is "work in progress", and as it work for most parts - you can find bugs, errors, or even something not work at all.
 
 **Prerequisites:**
 * Python 3.5 or newer
@@ -24,6 +25,11 @@
 4. Run api.py to get image data by easy http api calls 
    ```bash
    ./runapi.sh
+   ```
+5. You can run it as a docker container, for that you must kreate an Docker image by:
+   ```
+   docker build -t kenikcamerasimple .
+   docker run -d kenikcamerasimple
    ```
 **Background:**
 
