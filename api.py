@@ -18,10 +18,34 @@ async def get_maximum_entries():
     else:
         return 0  # If the database is empty
 
-@app.get("/images/{image_id}")
-async def get_image(image_id: int):
+@app.get("/cameras")
+async def get_cameras():
     db = camerasqlite()
-    image_data = db.get(image_id)
+    cam_list = db.getcameras()
+    return {
+        "message": "cameras found",
+        "cameras": cam_list
+    }
+
+@app.get("/cameras/lastimage/{address}")
+async def get_image(addresss: str):
+    db = camerasqlite()
+    image_data = db.getlastforaddress(addresss)
+    if not image_data:
+        raise HTTPException(status_code=404, detail="Image for this address not found")
+
+    return StreamingResponse(io.BytesIO(image_data), media_type="image/jpeg")  # Adjust mime-type if needed
+
+
+@app.get("/images/{image_id}")
+async def get_image(image_id: int | None = None):
+    db = camerasqlite()
+    image_data = None
+    if id:
+        image_data = db.get(image_id)
+    else:
+        maxid = db.getmax()
+        image_data = db.get(image_id)
     #image_data = Image.open(io.BytesIO(blob_data))
     if not image_data:
         raise HTTPException(status_code=404, detail="Image not found")
