@@ -15,7 +15,7 @@ def singleton(cls):
        return instance
    return wrapper
 
-@singleton
+#@singleton
 class camerasqlite():
     create_table_query = """
         CREATE TABLE IF NOT EXISTS images (

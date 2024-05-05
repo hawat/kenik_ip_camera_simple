@@ -27,10 +27,10 @@ async def get_cameras():
         "cameras": cam_list
     }
 
-@app.get("/cameras/lastimage/{address}")
-async def get_image(addresss: str):
+@app.get("/cameras/lastimage/")
+async def get_image(address: str):
     db = camerasqlite()
-    image_data = db.getlastforaddress(addresss)
+    image_data = db.getlastforaddress(address)
     if not image_data:
         raise HTTPException(status_code=404, detail="Image for this address not found")
 

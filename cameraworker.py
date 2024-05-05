@@ -24,3 +24,15 @@ class CameraWorker():
         for cameraw in cameraworkerlist:
             cameraw.capture()
             database.store(cameraw.get_jpg(),cameraw.host)
+
+    @staticmethod
+    def runallthread(cameraworkerlist: CameraWorkerList):
+        """
+        :type CameraWorkerList: object
+        :param CameraWorkerList:
+        """
+        database = camerasqlite()
+        for cameraw in cameraworkerlist:
+            cameraw.capture()
+            database.store(cameraw.get_jpg(), cameraw.host)
+
