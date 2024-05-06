@@ -5,6 +5,7 @@ from perfdecorator import time_execution
 import re
 
 
+
 def singleton(cls):
    instance = None
 
@@ -106,3 +107,12 @@ class camerasqlite():
         cursor.execute("SELECT image FROM images WHERE id = ( SELECT MAX(id) FROM images where address = ?)", (address,))
         blob_data = cursor.fetchone()[0]
         return blob_data
+
+    def getidbetweentimestamp(self, address:str, tfrom:str, tto:str) -> list:
+        cursor = self.conn.cursor()
+        cursor.execute("SELECT id FROM images WHERE address = ? AND timestamp BETWEEN ? AND ?", (address,tfrom, tto))
+        result = cursor.fetchall()
+        ids = [row[0] for row in result]
+        self.logger.info(f"ids:{ids}")
+        print(f"ids:{ids}")
+        return ids

@@ -1,11 +1,11 @@
-import configparser
-from camera import Camera
-from camerasqlite import camerasqlite
-from cameraworker import CameraWorker, CameraWorkerList
 import logging
 import argparse
+import configparser
 import time
 import threading
+from camerasqlite import camerasqlite
+from cameraworker import CameraWorker, CameraWorkerList
+
 
 
 
@@ -24,8 +24,8 @@ if __name__ == '__main__':
                         choices=["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"],
                         help="Set the logging level")
     parser.add_argument('--log_file', type=str, help='Path to the log file')
-    parser.add_argument('-t', '--repeat_time', type=int, help='time in seconds for repetition of image\
-     gathering')
+    parser.add_argument('-t', '--repeat_time', type=int, help='time in seconds\
+     for repetition of image gathering')
     args = parser.parse_args()
 
     # Configure Logging
@@ -65,16 +65,15 @@ if __name__ == '__main__':
     thread_running = threading.Thread()
     if args.repeat_time:
         while True:
-            logger.info(f'perform continuous gathering...')
+            logger.info('perform continuous gathering...')
             if not thread_running.is_alive() :
                 thread_running = threading.Thread(target=CameraWorker.runallthread, args=(camlist,))
                 thread_running.start()
             else:
-                logger.warning("thread still running, will check on next iteration, consider increasing cooldown time")
+                logger.warning("thread still running, will check on next iteration,\
+                 consider increasing cooldown time")
             time.sleep(args.repeat_time)
     else:
         CameraWorker.runall(camlist,database)
-    logger.info(f"exit...")
-
-
+    logger.info("exit...")
 
