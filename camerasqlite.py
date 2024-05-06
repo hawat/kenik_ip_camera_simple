@@ -116,3 +116,8 @@ class camerasqlite():
         self.logger.info(f"ids:{ids}")
         print(f"ids:{ids}")
         return ids
+
+    def deleteold(self,hours:int):
+        cursor = self.conn.cursor()
+        cursor.execute(f"DELETE FROM images WHERE timestamp < DATETIME('now', '-{str(hours)} hour'); ")
+        self.conn.commit()

@@ -1,11 +1,12 @@
 import logging
 
-from fastapi import FastAPI, HTTPException, File, UploadFile
+from fastapi import FastAPI, HTTPException, BackgroundTasks
 from fastapi.responses import StreamingResponse
 import io  # For working with image data in memory
 from camerasqlite import camerasqlite
 import tempfile
 from moviepy.editor import *
+from apscheduler.schedulers.background import BackgroundScheduler
 
 app = FastAPI(
     title="kenik ipcamera from-db-images api",
@@ -13,6 +14,7 @@ app = FastAPI(
     version="1.0.0",
 )
 
+scheduler = BackgroundScheduler()
 
 @app.get("/max_entries", response_model=int)
 async def get_maximum_entries():
@@ -97,3 +99,16 @@ async def get_video(address: str, tfrom: str, tto: str):
         'Content-Type': 'video/mp4'
     }
     return StreamingResponse(video_stream(temp_vide_file), headers=headers)
+
+@app.on_event("startup")
+async def startup_event():
+    scheduled_task()
+    scheduler.add_job(scheduled_task, 'interval', minutes=60)
+    scheduler.start()
+
+def scheduled_task():
+    logging.basicConfig(level=logging.INFO)  # Adjust logging level as needed
+    logger = logging.getLogger(__name__)
+    db = camerasqlite()
+    db.deleteold(24)
+    logger.info('old images purged')
